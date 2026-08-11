@@ -1,8 +1,5 @@
-name: "driftguard"
-description: >-
-  Zero-execution static analysis for breaking API driftguard between a
-  frontend and backend repo. Fails the check when a client call-site no
-  longer matches what the server actually returns.
+name: "DriftGuard Action"
+description: "Zero-execution static analysis for detecting breaking API contract drift between frontend and backend repos."
 branding:
   icon: "git-pull-request"
   color: "purple"
