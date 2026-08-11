@@ -28,7 +28,8 @@ async function runCli(
     });
     return { code: 0, stdout, stderr };
   } catch (err: any) {
-    const code = typeof err.status === "number" ? err.status : (typeof err.code === "number" ? err.code : 1);
+    const rawCode = typeof err.code === "number" ? err.code : (typeof err.status === "number" ? err.status : 1);
+    const code = rawCode !== 0 ? (rawCode & 0xff) || 1 : 0;
     return { code, stdout: err.stdout ?? "", stderr: err.stderr ?? "" };
   }
 }
