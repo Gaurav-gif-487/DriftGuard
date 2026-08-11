@@ -1,4 +1,4 @@
-name: contract-drift example
+name: DriftGuard Example
 
 on:
   workflow_dispatch:
@@ -34,9 +34,10 @@ jobs:
         run: npm run build
 
       - name: Analyze fixtures
-        run: node bin/contract-drift.mjs --demo --format=sarif --out=contract-drift.sarif
+        continue-on-error: true
+        run: node bin/driftguard.mjs --demo --format=sarif --out=driftguard.sarif
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: contract-drift.sarif
+          sarif_file: driftguard.sarif
