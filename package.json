@@ -1,0 +1,66 @@
+{
+  "name": "driftguard",
+  "version": "0.2.0",
+  "description": "Zero-execution API driftguard detector with provenance-backed graph diffing, impact analysis, intent verification, and conservative AST repair.",
+  "type": "module",
+  "bin": {
+    "driftguard": "./bin/driftguard.mjs",
+    "driftguard": "./bin/driftguard.mjs"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "node --import tsx --test test/*.test.ts",
+    "test:watch": "node --import tsx --test --watch test/*.test.ts",
+    "cli": "tsx src/cli.ts",
+    "profile": "node --import tsx scripts/profile-scale.mjs",
+    "benchmark": "node --import tsx scripts/benchmark.mjs",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "tree-sitter-wasms": "^0.1.13",
+    "typescript": "^5.4.0",
+    "web-tree-sitter": "^0.20.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.23.12"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "fixtures",
+    "action.yml",
+    "config.schema.json",
+    "driftguard.config.example.json",
+    "README.md",
+    "DESIGN.md",
+    "CHANGELOG.md",
+    "ROADMAP.md",
+    "LICENSE"
+  ],
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "api",
+    "contract",
+    "drift",
+    "static-analysis",
+    "sarif",
+    "openapi",
+    "breaking-changes",
+    "ci",
+    "typescript",
+    "fastapi",
+    "gin"
+  ]
+}

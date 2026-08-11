@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": { "const": "2.0" },
+    "client": { "type": "string", "minLength": 1 },
+    "server": { "type": "string", "minLength": 1 },
+    "serviceName": { "type": "string", "minLength": 1 },
+    "services": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["criticality"],
+        "properties": {
+          "criticality": { "enum": ["TIER_0_CRITICAL", "TIER_1_HIGH", "TIER_2_MEDIUM", "TIER_3_LOW"] },
+          "isPublicApi": { "type": "boolean" },
+          "environment": { "enum": ["production", "staging", "development"] },
+          "pathPrefix": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "baseWeightBreaking": { "type": "number", "minimum": 0 },
+        "baseWeightUnknown": { "type": "number", "minimum": 0 },
+        "publicApiBonus": { "type": "number", "minimum": 0 },
+        "transitiveBlastRadiusThreshold": { "type": "number", "minimum": 0 },
+        "transitiveBlastRadiusBonus": { "type": "number", "minimum": 0 },
+        "criticalityMultipliers": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0 } },
+        "thresholds": {
+          "type": "object",
+          "properties": {
+            "critical": { "type": "number", "minimum": 0, "maximum": 100 },
+            "high": { "type": "number", "minimum": 0, "maximum": 100 },
+            "medium": { "type": "number", "minimum": 0, "maximum": 100 }
+          },
+          "additionalProperties": false
+        },
+        "sensitiveFields": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

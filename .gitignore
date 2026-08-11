@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.nyc_output/
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+driftguard.sarif
+driftguard.md
+driftguard-impact.md
+contract-drift.sarif
+contract-drift.md
+contract-drift-impact.md
