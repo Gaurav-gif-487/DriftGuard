@@ -698,5 +698,7 @@ async function runReceiptCommand(argv:string[]):Promise<number>{
 // which naive `file://${argv[1]}` string concatenation gets wrong.
 const isDirectRun = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isDirectRun) {
-  main(process.argv.slice(2)).then((code) => process.exit(code));
+  main(process.argv.slice(2)).then((code) => {
+    process.exitCode = code;
+  });
 }
