@@ -141,7 +141,7 @@ function classifyPath(hops: DependencyPathHop[]): { kind: DependencyPathKind; pr
   return { kind: 'TRANSITIVE', proofLevel: weakest };
 }
 
-function explain(hops: DependencyPathHop[], graph: PathGraphView, contractId: string, consumerId: string): string {
+function explain(hops: DependencyPathHop[], graph: PathGraphView, contractId: string, _consumerId: string): string {
   if (!hops.length) return 'No graph path could be found from this contract to this consumer.';
   const names: string[] = [graph.getNode(contractId)?.name ?? contractId];
   for (const hop of hops) names.push(graph.getNode(hop.to)?.name ?? hop.to);
