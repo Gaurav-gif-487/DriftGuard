@@ -19,6 +19,7 @@ export type SupportedGrammar = "python" | "go";
 
 let initPromise: Promise<void> | null = null;
 const languageCache = new Map<SupportedGrammar, Promise<Parser.Language>>();
+let languageLoadQueue: Promise<void> = Promise.resolve();
 
 async function ensureInitialized(): Promise<void> {
   if (!initPromise) {
@@ -39,7 +40,11 @@ export async function getLanguage(grammar: SupportedGrammar): Promise<Parser.Lan
   await ensureInitialized();
   let cached = languageCache.get(grammar);
   if (!cached) {
-    cached = Parser.Language.load(grammarWasmPath(grammar));
+    cached = languageLoadQueue.then(() => Parser.Language.load(grammarWasmPath(grammar)));
+    languageLoadQueue = cached.then(
+      () => undefined,
+      () => undefined,
+    );
     languageCache.set(grammar, cached);
   }
   return cached;
