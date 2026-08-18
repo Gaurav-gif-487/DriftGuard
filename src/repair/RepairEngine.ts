@@ -63,12 +63,12 @@ function optionalChainInSource(source:string,field:string):string{const sf=ts.cr
 }
 
 export class RepairEngine{
-  static executeSafeRenameRepair(intent:StructuredChangeIntent,report:ImpactReport,graph:ContractGraph,readFile:(p:string)=>string,writeFile:((p:string,c:string)=>void)|undefined,dryRun=true):RepairResult{
+  static executeSafeRenameRepair(intent:StructuredChangeIntent,report:ImpactReport,_graph:ContractGraph,readFile:(p:string)=>string,writeFile:((p:string,c:string)=>void)|undefined,dryRun=true):RepairResult{
     if(intent.kind!=='rename-field'||!intent.fromPath||!intent.toPath)throw new Error('Only rename-field repair is supported safely');
     const from=intent.fromPath.split('.').pop()!,to=intent.toPath.split('.').pop()!;
     return RepairEngine.applyPerFileTransform(intent,report,readFile,writeFile,dryRun,`no proven AST property access for '${from}'`,(source)=>renameInSource(source,from,to));
   }
-  static executeSafeOptionalChainingRepair(intent:StructuredChangeIntent,report:ImpactReport,graph:ContractGraph,readFile:(p:string)=>string,writeFile:((p:string,c:string)=>void)|undefined,dryRun=true):RepairResult{
+  static executeSafeOptionalChainingRepair(intent:StructuredChangeIntent,report:ImpactReport,_graph:ContractGraph,readFile:(p:string)=>string,writeFile:((p:string,c:string)=>void)|undefined,dryRun=true):RepairResult{
     if(intent.kind!=='widen-optionality'||!intent.fromPath)throw new Error('Only widen-optionality repair is supported safely');
     const field=intent.fromPath.split('.').pop()!;
     return RepairEngine.applyPerFileTransform(intent,report,readFile,writeFile,dryRun,`no proven AST property access for '${field}' (or already optional-chained)`,(source)=>optionalChainInSource(source,field));
